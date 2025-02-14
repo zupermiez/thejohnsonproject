@@ -1,16 +1,32 @@
 import os
 import osmnx as ox
 from osmnx._errors import InsufficientResponseError
+import threading
 import cv2
 import numpy as np
 import shutil
 import pandas as pd
 from pyproj import Transformer
-
+import warnings
 
 
 
 def saveandprocess(north, south, east, west):
+
+    #skip this one
+    warnings.simplefilter(action='ignore', category=FutureWarning)
+    #timeout stuff so API doesnt get stuck becuase it gets stuck
+
+    timeout_flag = False
+
+    def timeout_handler():
+        nonlocal timeout_flag
+        timeout_flag = True
+        print("Request took too long")
+
+    timeout_thread = threading.Timer(60, timeout_handler) # = 1 minute
+    timeout_thread.start()
+
 
     tags = {"natural": "water", "water": "lake"}
     lake_data = pd.DataFrame()
@@ -19,8 +35,23 @@ def saveandprocess(north, south, east, west):
     #Get the data from API
     try:
         lake_data = ox.geometries_from_bbox(north, south, east, west, tags)
+        if timeout_flag:
+            raise TimeoutError("API too slow, skipping this one")
+    except TimeoutError as e:
+        print(e)
     except InsufficientResponseError:
         print(" No lakes in the ENTIRE box")
+    except KeyboardInterrupt:
+        print("Manually skipping the round because of keyboard interrupt")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+    finally:
+        timeout_thread.cancel()
+
+
+
+
+
 
     output_folder = "osm_lakecontours"
     #shutil.rmtree(output_folder, ignore_errors=True)

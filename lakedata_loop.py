@@ -1,9 +1,11 @@
 from lakedata_save_newfile import saveandprocess
 import time
 
-
 #starting coordinates
-north, south, east, west = 60.125, 60.0, 25.75, 25.625
+north, south, east, west = 60.125, 60.0, 27.625, 27.5
+
+
+
 
 for i in range(31):
     neweast, newwest = (east + (i / 8)), (west + (i / 8))
@@ -19,6 +21,9 @@ for i in range(31):
         saveandprocess(newnorth, newsouth, neweast, newwest)
         time.sleep(2)
 
+
+
+
 '''
 log
 DONE 
@@ -28,8 +33,9 @@ DONE
 60.125, 60.0, 25.625, 25.50 - easy now loop works just takes forever
 61.5, 61.375, 27.125, 27.0
 
-NEXT TO SCAN
-61.5, 61.375, 27.25, 27.125
+60.125, 60.0, 27.25, 27.125 MISSING THIS IS STUCK ON ROUND 11
+
+60.125, 60.0, 27.375, 27.25 - 69.0, 68.875, 27.375, 27.25) DONE
 
 
 '''
