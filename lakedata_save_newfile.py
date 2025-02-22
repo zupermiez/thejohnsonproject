@@ -1,7 +1,6 @@
 import os
 import osmnx as ox
 from osmnx._errors import InsufficientResponseError
-import threading
 import cv2
 import numpy as np
 import shutil
@@ -11,22 +10,11 @@ import warnings
 
 
 
-def saveandprocess(north, south, east, west):
+def saveandprocess(left, bottom, right, top):
 
     #skip this one
-    warnings.simplefilter(action='ignore', category=FutureWarning)
-    #timeout stuff so API doesnt get stuck becuase it gets stuck
-
-    timeout_flag = False
-
-    def timeout_handler():
-        nonlocal timeout_flag
-        timeout_flag = True
-        print("Request took too long")
-
-    timeout_thread = threading.Timer(60, timeout_handler) # = 1 minute
-    timeout_thread.start()
-
+    #warnings.simplefilter(action='ignore', category=FutureWarning)
+    ox.settings.request_timeout = 60
 
     tags = {"natural": "water", "water": "lake"}
     lake_data = pd.DataFrame()
@@ -34,26 +22,25 @@ def saveandprocess(north, south, east, west):
     print("Downloading lake data...")
     #Get the data from API
     try:
-        lake_data = ox.geometries_from_bbox(north, south, east, west, tags)
-        if timeout_flag:
-            raise TimeoutError("API too slow, skipping this one")
-    except TimeoutError as e:
-        print(e)
+        lake_data = ox.features_from_bbox((left, bottom, right, top), tags)
+
+    except TimeoutError:
+        print("time out time out")
     except InsufficientResponseError:
         print(" No lakes in the ENTIRE box")
     except KeyboardInterrupt:
         print("Manually skipping the round because of keyboard interrupt")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-    finally:
-        timeout_thread.cancel()
 
 
 
 
 
 
-    output_folder = "osm_lakecontours"
+
+
+    output_folder = "osm_lakecontours2"
     #shutil.rmtree(output_folder, ignore_errors=True)
     os.makedirs(output_folder, exist_ok=True)
 
@@ -73,11 +60,11 @@ def saveandprocess(north, south, east, west):
                 lon, lat = transformer.transform(centroid_utm.x, centroid_utm.y)
 
                 # do not include lakes that keep continue outside the boundaries
-                if not (south <= lat <= north and west <= lon <= east):
+                if not (bottom <= lat <= top and left <= lon <= right):
                     continue
 
                 # create image and draw contours
-                print(f"Processing lake at ({lat:.6f}, {lon:.6f})...")
+                #print(f"Processing lake at ({lat:.6f}, {lon:.6f})...")
                 img = np.zeros((384, 384), dtype=np.uint8)
                 bounds = lake.geometry.bounds
                 minx, miny, maxx, maxy = bounds
@@ -94,13 +81,11 @@ def saveandprocess(north, south, east, west):
                 # save with WGS84 centroid coordinates
                 lake_filename = f"lake_{lat:.6f}_{lon:.6f}.png"
                 cv2.imwrite(os.path.join(output_folder, lake_filename), img)
-                print(f"Saved image: {lake_filename}")
+                #print(f"Saved image: {lake_filename}")
             else:
                 centroid_utm = lake.geometry.centroid
                 lon, lat = transformer.transform(centroid_utm.x, centroid_utm.y)
-                print(f"lake at {lat:.6f} {lon:.6f} too small")
+                #print(f"lake at {lat:.6f} {lon:.6f} too small")
     else:
         print("No lake data found.")
 
-# missing from 61.5 to 61
-#saveandprocess(61.125, 61.0, 25.125, 25.0)
