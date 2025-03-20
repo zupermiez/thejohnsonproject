@@ -10,15 +10,18 @@ I trained a YOLO v8 computer vision model using sketches (30k images) from the i
 I built this during the 6 week program [Sidequest](https://mysidequest.xyz/s1/projects)
 
 
+
 ### Images
+
+
 
 <p float="left">
   <img src="final\lake_60.032732_24.490773.png" width="325" />
   <img src="final\lake2.png" width="400" />
 </p>
 <p float="left">
-  <img src="final\lake_61.989647_27.664928.png" width="275" />
-  <img src="final\lake4.png" width="300" />
+  <img src="final\lake_61.989647_27.664928.png" width="325" />
+  <img src="final\lake4.png" width="275" />
 </p>
 <p float="left">
   <img src="final\lake_62.760774_24.623631.png" width="325" />
