@@ -10,7 +10,7 @@ I trained a YOLO v8 computer vision model using sketches (30k images) from the i
 ![Results](/final/results.png)
 *Training graph from one of the previous runs. I halted the training early with the best model so unfortunately i do not have graphs for that*
 
-![Map data](/assets/img/greenmap.jpg)
+![Map data](/final/greenmap.jpg)
 *Before choosing the OSM API my other option was to scan satellite images using opencv contour detection.*
 
 
