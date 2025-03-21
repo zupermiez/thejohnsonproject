@@ -10,6 +10,13 @@ I trained a YOLO v8 computer vision model using sketches (30k images) from the i
 ![Results](/final/results.png)
 *Training graph from one of the previous runs. I halted the training early with the best model so unfortunately i do not have graphs for that*
 
+![Map data](/assets/img/greenmap.jpg)
+*Before choosing the OSM API my other option was to scan satellite images using opencv contour detection.*
+
+
+## Learning
+This project interested me because it combines machine learning with very concrete real world data and enabled me to find patterns where no one else has looked and produce some real word results. Training a neural network gave a lot of insight and understanding of how CNNs work. I Also learned of the importance of having high quality data, because the first 16 training runs did not produce sufficient results. I learned about the huge power of opencv with image processing and even data annotating.
+
 
 ### Links
 I built this during the 6 week program [Sidequest](https://mysidequest.xyz/s1/projects)
