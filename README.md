@@ -9,7 +9,8 @@ I trained a YOLO v8 computer vision model using sketches (30k images) from the i
 ### Links
 I built this during the 6 week program [Sidequest](https://mysidequest.xyz/s1/projects)
 
-
+### Data
+Thanks to this guy for the training data. https://github.com/studiomoniker/Quickdraw-appendix
 
 ### Images
 
