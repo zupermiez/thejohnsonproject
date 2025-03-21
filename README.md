@@ -6,6 +6,11 @@
 
 I trained a YOLO v8 computer vision model using sketches (30k images) from the internet. I leveraged OpenStreetMap and Overpass API to get all lakes in Finlands borders exceeding certain area threshold(2,500m^2). Then using OpenCV, I processed the lakes to make them look like my bitmap training data.Then just detect. OSM data doesnt always match with one in f.e. Google Maps and the CNN exhibits "some" overfitting but it has enabled me to do what I set out to do.
 
+
+![Results](/final/results.png)
+*Training graph from one of the previous runs. I halted the training early with the best model so unfortunately i do not have graphs for that*
+
+
 ### Links
 I built this during the 6 week program [Sidequest](https://mysidequest.xyz/s1/projects)
 
