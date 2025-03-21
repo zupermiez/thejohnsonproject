@@ -22,7 +22,7 @@ This project interested me because it combines machine learning with very concre
 I built this during the 6 week program [Sidequest](https://mysidequest.xyz/s1/projects)
 
 ### Data
-Thanks to this guy for the training data. https://github.com/studiomoniker/Quickdraw-appendix
+Thanks to these people for the training data. https://github.com/studiomoniker/Quickdraw-appendix
 
 ### Images
 
